@@ -1,11 +1,11 @@
 Lander theEagle;
 Leif theLeif;
 Planet thePlanet;
+Dashboard theDash;
 Rock[] rocks;
 
-
 float gravity = 0.003;
-int numRocks = 30;
+int numRocks = 200;
 int state = 0;
 
 PImage theEagleImage, skyImage, theLeifImage, FlameImage, mountainImage, rockImage1, rockImage2, rockImage3, groundImage, theLeifGameOverImage, theLeifGameOverImage2;
@@ -13,8 +13,6 @@ PImage theEagleImage, skyImage, theLeifImage, FlameImage, mountainImage, rockIma
 void setup() {
 
   size(800, 600);
-  
-
 
   theEagleImage = loadImage("bilder/theEagle.png");
   theLeifImage = loadImage("bilder/leif in an alien saucer 1.png");
@@ -33,6 +31,7 @@ void setup() {
   theEagle = new Lander();
   theLeif = new Leif();
   thePlanet = new Planet();
+  theDash = new Dashboard();
   rocks = new Rock[numRocks];
   for (int i = 0; i < numRocks; i++) {
     if (i % 3 == 0) {
@@ -55,6 +54,7 @@ void draw() {
   }
   theEagle.update();
   theLeif.update();
+  theDash.update();
 
   collisionCheck();
 
