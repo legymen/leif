@@ -7,7 +7,7 @@ class Lander {
 
   float thrusterForce = 0.8;
   float mass = 100;
-  float fuelRem;
+  float fuel;
 
   Boolean frontThruster = false;
   Boolean backThruster = false;
@@ -19,7 +19,7 @@ class Lander {
     velocity = new PVector(0.3, 0.3);
     acceleration = new PVector(0, 0);
     totalForce = new PVector(0, 0);
-    fuelRem = 1000;
+    fuel = 100;
   }
 
   void display() {
@@ -32,7 +32,6 @@ class Lander {
       translate(-9, -50);
       image(FlameImage, 0, 0);
       popMatrix();
-      fuelRem--;
     }
     if (backThruster) {
       pushMatrix();
@@ -40,7 +39,6 @@ class Lander {
       rotate(radians(180));
       image(FlameImage, 0, 0);
       popMatrix();
-      fuelRem--;
     }
     if (leftThruster) {
       pushMatrix();
@@ -48,7 +46,6 @@ class Lander {
       rotate(radians(-90));
       image(FlameImage, 0, 0);
       popMatrix();
-      fuelRem--;
     }
     if (rightThruster) {
       pushMatrix();
@@ -56,7 +53,6 @@ class Lander {
       rotate(radians(90));
       image(FlameImage, 0, 0);
       popMatrix();
-      fuelRem--;
     }
 
     popMatrix();
@@ -68,15 +64,19 @@ class Lander {
     totalForce.mult(0);
     if (frontThruster) {
       totalForce.add(0, thrusterForce);
+      fuel = fuel - 0.03;
     }
     if (backThruster) {
       totalForce.add(0, -thrusterForce);
+      fuel = fuel - 0.03;
     }
     if (leftThruster) {
       totalForce.add(thrusterForce, 0);
+      fuel = fuel - 0.03;
     }
     if (rightThruster) {
       totalForce.add(-thrusterForce, 0);
+      fuel = fuel - 0.03;
     }
     totalForce.add(0, gravity*mass);
 

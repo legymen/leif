@@ -8,7 +8,7 @@ float gravity = 0.003;
 int numRocks = 200;
 int state = 0;
 
-PImage theEagleImage, skyImage, theLeifImage, FlameImage, mountainImage, rockImage1, rockImage2, rockImage3, groundImage, theLeifGameOverImage, theLeifGameOverImage2;
+PImage theEagleImage, skyImage, theLeifImage, FlameImage, mountainImage, rockImage1, rockImage2, rockImage3, groundImage, theLeifGameOverImage, theLeifGameOverImage2,dashImage;
 
 void setup() {
 
@@ -24,7 +24,7 @@ void setup() {
   rockImage1 = loadImage("bilder/rock1.png");
   rockImage2 = loadImage("bilder/rock2.png");
   rockImage3 = loadImage("bilder/rock3.png");
-
+  dashImage = loadImage("bilder/Dash.png");
   // groundImage = loadImage("");
 
 
@@ -47,14 +47,14 @@ void setup() {
 void draw() {
 
   thePlanet.update();
-
+  theDash.update();
 
   for (int i = 0; i < numRocks; i++) {
     rocks[i].update();
   }
   theEagle.update();
   theLeif.update();
-  theDash.update();
+  
 
   collisionCheck();
 
