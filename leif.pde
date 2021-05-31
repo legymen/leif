@@ -1,19 +1,21 @@
 Lander theEagle;
 Leif theLeif;
 Planet thePlanet;
-Dashboard theDash;
 Rock[] rocks;
+Dashboard theDash;
 
 float gravity = 0.003;
-int numRocks = 200;
-int state = 0;
+int numRocks = 60;
+
+int state = 1;
 
 PImage theEagleImage, skyImage, theLeifImage, FlameImage, mountainImage, rockImage1, rockImage2, rockImage3, groundImage, theLeifGameOverImage, theLeifGameOverImage2,dashImage;
 
 void setup() {
 
   size(800, 600);
-
+  
+  // Load the images
   theEagleImage = loadImage("bilder/theEagle.png");
   theLeifImage = loadImage("bilder/leif in an alien saucer 1.png");
   skyImage = loadImage("bilder/himlen2.png");
@@ -24,15 +26,15 @@ void setup() {
   rockImage1 = loadImage("bilder/rock1.png");
   rockImage2 = loadImage("bilder/rock2.png");
   rockImage3 = loadImage("bilder/rock3.png");
+  groundImage = loadImage("bilder/ground.JPG");
   dashImage = loadImage("bilder/Dash.png");
-  // groundImage = loadImage("");
 
-
+  // Create all objects
   theEagle = new Lander();
   theLeif = new Leif();
   thePlanet = new Planet();
-  theDash = new Dashboard();
   rocks = new Rock[numRocks];
+  theDash = new Dashboard();
   for (int i = 0; i < numRocks; i++) {
     if (i % 3 == 0) {
       rocks[i] = new Rock(random(0, width), random(float(height - 150), float(height)), rockImage1);
@@ -46,22 +48,44 @@ void setup() {
 
 void draw() {
 
-  thePlanet.update();
-  theDash.update();
-
-  for (int i = 0; i < numRocks; i++) {
-    rocks[i].update();
-  }
-  theEagle.update();
-  theLeif.update();
-  
-
-  collisionCheck();
-
+  // Game state
   if (state == 1) {
-    pushMatrix();
-    translate(width/2, height/2);
-    image(theLeifGameOverImage, 0, 0);
-    popMatrix();
+    
+    // Update objects
+    thePlanet.update();
+    theDash.update();
+    for (int i = 0; i < numRocks; i++) {
+      rocks[i].update();
+    }
+    theEagle.update();
+    theLeif.update();
+    
+    // Check for collision with Leif
+    collisionCheck();
+    
+  }
+
+
+  // State for collision with Leif
+  if (state == 2) { 
+    gameOverLeif();
+  }
+
+
+  // Landing state
+  if (state == 3) {
+
+    if (abs(theEagle.velocity.x) > 0.2 || abs(theEagle.velocity.y) > 0.2) {
+      gameOverSpeedLanding();
+      text("YOU CRASHED WITH SPEED", 100, 100);
+      noLoop();
+    } else if (checkCollisionRocks()) {
+      gameOverRockyLanding();
+      text("YOU CRASHED WITH ROCKS", 100, 100);
+      noLoop();
+    } else {
+      text("YOU WIN", 100, 100);
+      noLoop();
+    }
   }
 }

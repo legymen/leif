@@ -39,10 +39,10 @@ class Dashboard {
   }
   void displayFuelDial(){
    
-    float fuel = theEagle.fuel;
+    float fuel = theEagle.fuelRem;
     pushMatrix();
     textSize(25);
-   text(round(fuel) + "%", 170 , 76);
+   text(round(theEagle.fuelRem) + "%", 170 , 76);
     fill (255,255,255);
     popMatrix();
   }
